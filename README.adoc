@@ -6,18 +6,26 @@ A personal project with Spring boot and Vuejs
 [[used-technologies]]
 == Used Technologies
 
+- BACK-END:
 * Java 11
 * http://projects.spring.io/spring-boot/[Spring Boot] for REST API
-* https://vuejs.org/[Vue.js] - https://www.javascript.com/[JavaScript] for web client
 * https://www.postgresql.org/[PostgreSQL] for Database
-* https://cloudinary.com/[Cloudinary] for Image Storage
 * https://maven.apache.org/[Maven] as build system
+* https://cloudinary.com/[Cloudinary] for Image Storage
+
+
+- FRONT-END:
+* https://vuejs.org/[Vue.js] for web client
+* https://vuex.vuejs.org/[Vuex] for State management
+* https://www.javascript.com/[JavaScript] for web client
 * https://antdv.com/docs/vue/introduce/[Antdv] as design template
+
+
 
 [[source-code]]
 == Source Code
 
-* https://github.com/volong/PAHT/tree/master/paht[PAHT-BE] for Back-end
-* https://github.com/volong/PAHT/tree/master/paht[PAHT-FE] for Front-end
+* https://github.com/volong/PAHT/tree/master/paht[PAHT BACK-END]
+* https://github.com/volong/PAHT/tree/master/paht[PAHT FRONT-END] 
 
 
