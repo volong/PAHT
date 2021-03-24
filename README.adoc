@@ -1,0 +1,23 @@
+[[chatty-build-status]]
+= Cong Gop y - Phan anh
+
+A personal project with Spring boot and Vuejs
+
+[[used-technologies]]
+== Used Technologies
+
+* Java 11
+* http://projects.spring.io/spring-boot/[Spring Boot] for REST API
+* https://vuejs.org/[Vue.js] - https://www.javascript.com/[JavaScript] for web client
+* https://www.postgresql.org/[PostgreSQL] for Database
+* https://cloudinary.com/[Cloudinary] for Image Storage
+* https://maven.apache.org/[Maven] as build system
+* https://antdv.com/docs/vue/introduce/[Antdv] as design template
+
+[[source-code]]
+== Source Code
+
+* https://github.com/volong/PAHT/tree/master/paht[PAHT-BE] for Back-end
+* https://github.com/volong/PAHT/tree/master/paht[PAHT-FE] for Front-end
+
+
