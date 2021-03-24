@@ -1,0 +1,13 @@
+package com.paht;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+
+@SpringBootTest
+class PahtApplicationTests {
+
+    @Test
+    void contextLoads() {
+    }
+
+}
