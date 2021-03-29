@@ -20,16 +20,17 @@ List accounts:
 - General password: 123456
 
 - User's Accounts:
- * username: volong
- * username: user1
+ * username: volong - fullname: Võ Long
+ * username: user1 - fullname: User 1
 
 - Department's Accounts:
  * username: dvc - fullname: Trung tâm thông tin dịch vụ công
  * username: sct - fullname: Sở Công thương
  * username: sgtvt - fullname: Sở Giao thông vận tải
+ ...
 
 - Admin's Account:
- * username: admin
+ * username: admin - fullname: Quản trị viên
 
 
 [[used-technologies]]
@@ -41,6 +42,7 @@ List accounts:
 * https://www.postgresql.org/[PostgreSQL] for Database
 * https://maven.apache.org/[Maven] as build system
 * https://cloudinary.com/[Cloudinary] for Image Storage
+* https://heroku.com/[Heroku] for deploy SpringBoot server
 
 
 - FRONT-END:
@@ -48,6 +50,8 @@ List accounts:
 * https://vuex.vuejs.org/[Vuex] for State management
 * https://www.javascript.com/[JavaScript] for web client
 * https://antdv.com/docs/vue/introduce/[Antdv] as design template
+* https://firebase.google.com/[Firebase] for deploy Vuejs app
+
 
 
 
