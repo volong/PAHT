@@ -2,7 +2,7 @@
   <!-- Buttons default template -->
   <div>
     <div class="button">
-      <admin-article-hanlder></admin-article-hanlder>
+      <dep-article-detail-hanlder />
     </div>
     <div>
       <a-descriptions>
@@ -85,7 +85,7 @@
 <script>
 import ArticleService from "@/service/ArticleService.js";
 import FileArticleService from "@/service/FileArticleService.js";
-import AdminArticleHanlder from "./AdminArticleHanlder.vue";
+import DepArticleDetailHanlder from "./DepArticleDetailHanlder.vue";
 
 var articleObj = new Object();
 var currentArticle_id;
@@ -94,8 +94,8 @@ var imageInfos = [];
 var imageParams = [];
 var currentDate;
 export default {
-  components: { AdminArticleHanlder },
-  name: "AdminArticleDetail",
+  components: { DepArticleDetailHanlder },
+  name: "DepArticleDetail",
   data() {
     return {
       articleObj,
@@ -175,40 +175,40 @@ export default {
 
 <style lang="sass" scoped>
 .button
-  padding-bottom: 2rem
+    padding-bottom: 2rem
 
 .image-container
-  text-align: center
+    text-align: center
 
 .content-post
-  white-space: pre-wrap
+    white-space: pre-wrap
 
 img
-  padding: 20px
-  width: 25%
+    padding: 20px
+    width: 25%
 
 textarea
-  width: 100%
-  padding-top: 1rem
-  background-color: #ffffff
-  border-color: #e6e6e6
-  outline: none
-  border-radius: 4px
+    width: 100%
+    padding-top: 1rem
+    background-color: #ffffff
+    border-color: #e6e6e6
+    outline: none
+    border-radius: 4px
 
 .input
-  padding-top: 1rem
+    padding-top: 1rem
 
 .clearfix
-  padding-top: 1rem
+    padding-top: 1rem
 
 .upload
-  margin-top: 1rem
+    margin-top: 1rem
 .button
-  padding-top: 0.5rem
-  border: none
-  height: 100%
+    padding-top: 0.5rem
+    border: none
+    height: 100%
 
 .icon
-  margin-left: 6px
-  font-size: 18px
+    margin-left: 6px
+    font-size: 18px
 </style>

@@ -16,10 +16,10 @@ public interface FeedbackRepository extends JpaRepository<Feedback, Long> {
     Optional<Feedback> findByArticle_id(@Param("article_id") Long article_id);
 
     @Modifying
-    @Query(value = "INSERT INTO feedbacks (article_id) VALUES (:article_id)", nativeQuery = true)
-    void create(@Param("article_id") Long article_id);
+    @Query(value = "INSERT INTO feedbacks (content, article_id) VALUES (:content, :article_id)", nativeQuery = true)
+    void create(@Param("content") String content , @Param("article_id") Long article_id);
 
     @Modifying
-    @Query(value = "UPDATE feedbacks SET content = :content, dateoffb = :dateoffb WHERE article_id = :article_id", nativeQuery = true)
-    void update(@Param("content") String content, @Param("dateoffb") String dateoffb, @Param("article_id") Long article_id);
+    @Query(value = "UPDATE feedbacks SET content = :content, dateoffb = :dateoffb, respondent = :respondent WHERE article_id = :article_id", nativeQuery = true)
+    void update(@Param("content") String content, @Param("dateoffb") String dateoffb, @Param("respondent") String respondent, @Param("article_id") Long article_id);
 }

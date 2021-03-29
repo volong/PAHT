@@ -58,6 +58,10 @@ export default new Router({
           component: () => import("@/components/page/admin/components/AdminDepartmentList"),
         },
         {
+          path: "users",
+          component: () => import("@/components/page/admin/components/AdminUserAccount")
+        },
+        {
           path: "dashboard",
           component: () => import("@/components/page/admin/components/AdminDashboard"),
         },
@@ -74,18 +78,22 @@ export default new Router({
           component: () => import("@/components/page/admin/components/AdminArticlesListProcessing")
         },
         {
-          path: 'processing/page:=pageIndex',
+          path: 'processing/page=:pageIndex',
           component: () => import("@/components/page/admin/components/AdminArticlesListProcessing")
         },
 
         {
-          path: 'processed/page:=pageIndex',
+          path: 'processed/page=:pageIndex',
           component: () => import("@/components/page/admin/components/AdminArticlesListProcessed")
         },
 
         {
           path: 'processed',
           component: () => import("@/components/page/admin/components/AdminArticlesListProcessed")
+        },
+        {
+          path: "deleted",
+          component: () => import("@/components/page/admin/components/AdminArticlesListDeleted"),
         },
         {
           path: "article/:id",
@@ -95,7 +103,31 @@ export default new Router({
     },
     {
       path: '/dep',
-      component: () => import("@/components/page/dep/containers/DepLayout")
+      component: () => import("@/components/page/dep/containers/DepLayout"),
+      children: [
+        {
+          path: '/',
+          redirect: to => {
+            return 'processing';
+          }
+        },
+        {
+          path: 'processing',
+          component: () => import("@/components/page/dep/components/DepArticlesListProcessing")
+        },
+        {
+          path: 'processed',
+          component: () => import("@/components/page/dep/components/DepArticlesListProcessed")
+        },
+        {
+          path: 'processing/page:=pageIndex',
+          component: () => import("@/components/page/dep/components/DepArticlesListProcessing")
+        },
+        {
+          path: "article/:id",
+          component: () => import("@/components/page/dep/components/DepArticleDetail")
+        },
+      ]
     },
 
 

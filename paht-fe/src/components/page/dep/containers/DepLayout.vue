@@ -14,27 +14,16 @@
         <a-sub-menu key="sub1">
           <span slot="title"><a-icon type="edit" /><span>Bài viết</span></span>
           <a-menu-item key="1">
-            <router-link to="/admin/processing" exact></router-link>
+            <router-link to="/dep/processing" exact></router-link>
 
             Đang xử lí
           </a-menu-item>
 
           <a-menu-item key="2">
-            <router-link to="/admin/processed" exact></router-link>
+            <router-link to="/dep/processed" exact></router-link>
             Đã xử lí
           </a-menu-item>
         </a-sub-menu>
-
-        <!-- <a-menu-item v-for="i in menu" :key="i.key">
-          <router-link :to="i.path" exact></router-link>
-          <a-icon :type="i.icon" />
-          <span>{{ i.title }}</span>
-        </a-menu-item> -->
-
-        <a-menu-item @click="logOut">
-          <a-icon type="logout" />
-          <span>Đăng xuất</span>
-        </a-menu-item>
       </a-menu>
     </a-layout-sider>
     <a-layout>
@@ -44,13 +33,36 @@
           :type="collapsed ? 'menu-unfold' : 'menu-fold'"
           @click="() => (collapsed = !collapsed)"
         />
+        <template class="admin-dropdown">
+          <a-dropdown>
+            <a-button type="link">{{ currentUser.fullname }}</a-button>
+            <a-menu slot="overlay">
+              <!-- <a-menu-item
+                ><a href=""> <a-icon type="user" /> Thông tin </a>
+              </a-menu-item>
+              <a-menu-item
+                ><a href="">
+                  <a-icon type="setting" />
+                  Tài khoản
+                </a>
+              </a-menu-item> -->
+
+              <a-menu-item
+                ><a @click="logOut">
+                  <a-icon type="logout" />
+                  Đăng xuất
+                </a>
+              </a-menu-item>
+            </a-menu>
+          </a-dropdown>
+        </template>
       </a-layout-header>
       <a-layout-content
         :style="{
           margin: '24px 16px',
           padding: '24px',
           background: '#fff',
-          minHeight: '650px',
+          minHeight: '700px',
         }"
       >
         <router-view />
@@ -88,7 +100,7 @@ export default {
   methods: {
     logOut() {
       this.$store.dispatch("depAuth/logout");
-      this.$router.push("/");
+      this.$router.push("/dep/login");
     },
   },
 

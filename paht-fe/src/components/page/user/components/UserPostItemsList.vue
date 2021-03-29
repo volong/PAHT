@@ -18,7 +18,11 @@
         </div>
 
         <div class="field-tag">
-          <a-tag color="#87d068">{{ article.field.field_name }} </a-tag>
+          <a-tag
+            color=" #ff4d4d
+"
+            >{{ article.field.field_name }}
+          </a-tag>
         </div>
 
         <div>
@@ -37,8 +41,8 @@
     </a-list>
 
     <div class="loading-container">
-      <a-spin>
-        <a-button type="default">Xem thêm.. </a-button>
+      <a-spin :spinning="loadMoreSpinning" tip="Đang tải...">
+        <a-button @click="loadMore" type="default">Xem thêm.. </a-button>
       </a-spin>
     </div>
   </div>
@@ -60,21 +64,24 @@ export default {
       listPostItem: [],
       busy: false,
       pageIndex: 0,
-      loadMore: true,
       page: 1,
+      loadMoreSpinning: false,
       pageSize: 9,
       images: [],
     };
   },
   methods: {
     getListArticlesChecked(index) {
+      this.loadMoreSpinning = true;
       ArticleService.findAllChecked(index)
         .then((response) => {
           this.articles = response.data;
           this.listPostItem = this.listPostItem.concat(this.articles);
+          this.loadMoreSpinning = false;
         })
         .catch((error) => {
           this.$message.warning("Lỗi hệ thống, vui lòng thử lại sau");
+          this.loadMoreSpinning = false;
         });
     },
 
@@ -82,9 +89,7 @@ export default {
       this.$router.push("/article/" + article_id);
     },
 
-    handleInfiniteOnLoad() {},
-
-    getImagesInfo() {
+    loadMore() {
       this.pageIndex = this.pageIndex + 9;
       this.getListArticlesChecked(this.pageIndex);
     },
@@ -99,7 +104,7 @@ export default {
 <style scoped>
 .content {
   width: 800px;
-  height: 65px;
+  height: 85px;
   overflow: hidden;
   text-overflow: ellipsis;
 }
@@ -133,7 +138,7 @@ export default {
 }
 
 .item {
-  height: 200px;
+  height: 250px;
   overflow: hidden;
   text-overflow: ellipsis;
 }

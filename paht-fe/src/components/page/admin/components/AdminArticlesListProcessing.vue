@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="search-button">
+    <!-- <div class="search-button">
       <a-input
         placeholder="Nhập từ khoá tìm kiếm"
         widy
@@ -10,7 +10,7 @@
         @change="onChangeSearch"
       />
       <br />
-    </div>
+    </div> -->
 
     <div>
       <a-table
@@ -21,7 +21,9 @@
         rowKey="article_id"
       >
         <p slot="expandedRowRender" slot-scope="record" style="margin: 0">
-          <span class="span">{{ record.title }}</span>
+          <span class="span-title">{{ record.title }}</span>
+          <br />
+          <span class="span-location">• {{ record.location }}</span>
 
           <br />
           {{ record.content }}
@@ -41,10 +43,10 @@
 
     <div class="pagination">
       <a-pagination
-        v-if="visiblePagin"
+        v-if="visblePagin"
         :total="totalPage"
-        :page-size.sync="this.pageSize"
-        :default-current="pageSize"
+        :page-size.sync="pageSize"
+        :default-current="pageIndex"
         @change="onChangePage"
       />
     </div>
@@ -62,6 +64,7 @@ var tableVisble;
 var currentStatus_id;
 var sort;
 var pageIndex;
+var visblePagin;
 var totalPage;
 var pageSize;
 var keyword;
@@ -74,13 +77,14 @@ export default {
       data: [],
       pagination: {},
       articles,
+      visblePagin: true,
       pageSize: 9,
       status_id: 2,
       offset,
       visiblePagin: true,
       currentStatus_id,
       tableVisble,
-      pageIndex,
+      pageIndex: 1,
       totalPage,
       keyword,
       statuses,
@@ -91,27 +95,27 @@ export default {
       columns: [
         {
           dataIndex: "title",
-          width: "35%",
+          width: "25%",
           ellipsis: true,
           scopedSlots: { customRender: "textTitle" },
           slots: { title: "customTitle" },
         },
         {
-          title: "Địa điểm",
-          dataIndex: "location",
-          width: "30%",
+          title: "Đơn vị xử lí",
+          dataIndex: "dep.fullname",
+          width: "13%",
           ellipsis: true,
         },
         {
           dataIndex: "field.field_name",
-          width: "13%",
+          width: "10%",
           slots: { title: "customField" },
           ellipsis: true,
         },
         {
           title: "Ngày đăng",
           dataIndex: "dateofpost",
-          width: "15%",
+          width: "10%",
 
           ellipsis: true,
         },
@@ -120,23 +124,20 @@ export default {
   },
   methods: {
     onChangePage(result) {
-      this.$router.push("/admin/page=" + result);
-      this.onLoadPage();
-    },
-
-    detailPage(article_id) {
-      this.$router.push("/admin/article/" + article_id);
+      this.pageIndex = result;
+      this.getAllArticles();
     },
 
     onChangeSearch() {
-      if (this.keyword == "") {
-        this.getAllArticles();
+      if (this.keyword === "") {
+        this.getAllArticlesASC();
       } else {
         this.searchByKeyword();
       }
     },
 
     getAllArticlesASC() {
+      this.visblePagin = true;
       ArticleService.findNewArticlesASC(
         this.status_id,
         this.pageSize,
@@ -151,19 +152,12 @@ export default {
     },
 
     getAllArticles() {
-      this.visiblePagin = true;
       this.getOFFSET();
       this.getAllArticlesASC();
     },
 
-    getListStatus() {
-      StatusService.findAll()
-        .then((response) => {
-          this.statuses = response.data;
-        })
-        .catch((e) => {
-          this.$message.warning("Lỗi khi lấy danh sách trạng thái");
-        });
+    detailPage(article_id) {
+      this.$router.push("/admin/article/" + article_id);
     },
 
     getTotalPage() {
@@ -176,31 +170,13 @@ export default {
 
     getOFFSET() {
       if (this.pageIndex === 1) {
-        this.pageIndex = this.offset - 1;
+        this.pageIndex = this.pageIndex - 1;
       } else {
-        this.pageIndex = (this.offset - 1) * this.pageSize;
+        this.pageIndex = (this.pageIndex - 1) * this.pageSize;
       }
     },
 
-    searchByKeyword() {
-      this.visiblePagin = false;
-      ArticleService.search(2, this.keyword)
-        .then((response) => {
-          this.articles = response.data;
-          console.log("obj", response.data);
-        })
-        .catch((e) => {});
-    },
-
-    getPageIndex() {
-      if (this.$route.params.pageIndex === undefined) {
-        this.offset = 1;
-      } else {
-        this.offset = +this.$route.params.pageIndex;
-      }
-    },
     onLoadPage() {
-      this.getPageIndex();
       this.getTotalPage();
       this.getAllArticles();
     },
@@ -224,8 +200,11 @@ export default {
   padding-top: 10px;
   text-align: right;
 }
-.span {
+.span-title {
   color: black;
   padding-bottom: 2px;
+}
+.span-location {
+  padding-left: 10px;
 }
 </style>

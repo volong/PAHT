@@ -3,6 +3,16 @@
 
 A personal project with Spring boot and Vuejs
 
+[[live-demo]]
+== Live Demo
+
+Currently the project is deployed.
+You can try out a live demo my project at
+
+* https://paht-live.web.app/
+
+
+
 [[used-technologies]]
 == Used Technologies
 

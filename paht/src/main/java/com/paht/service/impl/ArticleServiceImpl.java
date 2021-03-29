@@ -30,8 +30,18 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
+    public List<Article> findArticlesIsDeleted(Long pageIndex) {
+        return articleRepository.findArticlesIsDeleted(pageIndex);
+    }
+
+    @Override
     public List<Article> findByStatus_idSortASC(Long status_id,Long pageSize, Long pageIndex) {
         return articleRepository.findByStatus_idSortASC(status_id, pageSize, pageIndex);
+    }
+
+    @Override
+    public List<Article> findByDep_id(Long status_id, Long dep_id, Long pageSize, Long pageIndex) {
+        return articleRepository.findByDep_id(status_id, dep_id, pageSize, pageIndex);
     }
 
     @Override
@@ -51,12 +61,28 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
+    public Long sumForDep(Long dep_id, Long status_id) {
+        return articleRepository.sumForDep(dep_id, status_id);
+    }
+
+    @Override
     public void save(Article article) {
         articleRepository.save(article);
     }
 
     @Override
-    public void update(String title, String avatar, Long status_id, Long field_id, Long article_id) {
-        articleRepository.update(title, avatar, status_id, field_id, article_id);
+    public void update(String title, Long status_id, Long field_id, Long dep_id, Long article_id) {
+        articleRepository.update(title, status_id, field_id, dep_id, article_id);
     }
+
+    @Override
+    public void delete(Long article_id) {
+        articleRepository.delete(article_id);
+    }
+
+    @Override
+    public void restore(Long article_id) {
+        articleRepository.restore(article_id);
+    }
+
 }

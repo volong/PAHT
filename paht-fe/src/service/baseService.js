@@ -7,15 +7,12 @@ import API_URL from "@/common/config";
 const BaseService = {
 
     get(resource) {
-        return axios.get(`${API_URL}/${resource}`).catch(error => {
-            console.log(error)
-        });
+        return axios.get(`${API_URL}/${resource}`)
+
     },
 
     getById(resource, id) {
-        return axios.get(`${API_URL}/${resource}/${id}`).catch(error => {
-            console.log(error)
-        });
+        return axios.get(`${API_URL}/${resource}/${id}`)
     },
 
     post(resource, params) {

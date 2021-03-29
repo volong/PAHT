@@ -22,12 +22,12 @@ public class FeedbackServiceImpl implements FeedbackService {
     }
 
     @Override
-    public void create(Long article_id) {
-        feedbackRepository.create(article_id);
+    public void create(String content, Long article_id) {
+        feedbackRepository.create(content, article_id);
     }
 
     @Override
-    public void update(String content, String dateoffb, Long article_id) {
-        feedbackRepository.update(content, dateoffb, article_id);
+    public void update(String content, String dateoffb, String respondent, Long article_id) {
+        feedbackRepository.update(content, dateoffb, respondent, article_id);
     }
 }

@@ -5,20 +5,20 @@ class ArticleService {
         return BaseService.get(`articles/asc/${status_id}/${pageSize}/${pageIndex}`)
     };
 
-    findNewArticlesDESC(status_id, pageSize, pageIndex) {
-        return BaseService.get(`articles/desc/${status_id}/${pageSize}/${pageIndex}`)
-    };
-
     findAllChecked(pageIndex) {
         return BaseService.get(`article/checked/${pageIndex}`)
+    }
+
+    findArticlesIsDeleted(pageIndex, pageSize) {
+        return BaseService.get(`article/isdeleted/${pageIndex}/${pageSize}`)
     }
 
     findByStatus(status_id) {
         return BaseService.get(`find_articles_by_status/${status_id}`)
     };
 
-    findByDep(dep_id, status_id) {
-        return BaseService.get(`find_articles_by_dep/${dep_id}/${status_id}`)
+    findByDep(status_id, dep_id, pageSize, pageIndex) {
+        return BaseService.get(`articles/bydep/${status_id}/${dep_id}/${pageSize}/${pageIndex}`)
     }
 
     findByDate(dateofpost) {
@@ -33,6 +33,10 @@ class ArticleService {
         return BaseService.get(`sum/articles/${status_id}`)
     }
 
+    getSumArticlesForDep(dep_id, status_id) {
+        return BaseService.get(`sum/articles/fordep/${dep_id}/${status_id}`)
+    }
+
     create(article) {
         return BaseService.post("article", article)
     }
@@ -43,6 +47,14 @@ class ArticleService {
 
     search(status_id, keyword) {
         return BaseService.get(`search/${status_id}/${keyword}`)
+    }
+
+    remove(id) {
+        return BaseService.delete(`article`, id)
+    }
+
+    restore(id) {
+        return BaseService.restore("article/restore", id)
     }
 
 

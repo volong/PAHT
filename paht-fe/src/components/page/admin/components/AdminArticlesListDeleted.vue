@@ -46,8 +46,8 @@
         <a-pagination
           v-if="visblePagin"
           :total="totalPage"
-          :page-size.sync="pageSize"
-          :default-current="pageIndex"
+          :page-size.sync="this.pageSize"
+          :default-current="pageSize"
           @change="onChangePage"
         />
       </div>
@@ -76,13 +76,12 @@ export default {
       data: [],
       pagination: {},
       articles,
-      detailVisible: false,
       pageSize: 9,
       status_id: 1,
       offset,
       currentStatus_id,
       tableVisble,
-      pageIndex: 1,
+      pageIndex,
       visblePagin: true,
       totalPage,
       keyword,
@@ -121,36 +120,21 @@ export default {
   },
   methods: {
     onChangePage(result) {
-      this.pageIndex = result;
-      this.getAllArticles();
+      this.$router.push("/admin/page=" + result);
+      this.onLoadPage();
     },
 
     onChangeSearch() {
-      if (this.keyword === "") {
-        this.getAllArticlesASC();
+      if (this.keyword == "") {
+        this.getAllArticles();
       } else {
         this.searchByKeyword();
       }
     },
 
-    confirmDelete(id) {
-      ArticleService.remove(id)
-        .then((response) => {
-          this.$message.warning("Xoá bài viết thành công");
-          this.getAllArticlesASC();
-        })
-        .catch((e) => {
-          this.$message.warning("Lỗi!");
-        });
-    },
-
     getAllArticlesASC() {
       this.visblePagin = true;
-      ArticleService.findNewArticlesASC(
-        this.status_id,
-        this.pageSize,
-        this.pageIndex
-      )
+      ArticleService.findArticlesIsDeleted(this.pageSize, this.pageIndex)
         .then((response) => {
           this.articles = response.data;
         })
@@ -178,10 +162,6 @@ export default {
       this.$router.push("/admin/article/" + article_id);
     },
 
-    closeDrawer() {
-      this.detailVisible = false;
-    },
-
     getTotalPage() {
       ArticleService.getSumArticles(this.status_id)
         .then((response) => {
@@ -192,9 +172,9 @@ export default {
 
     getOFFSET() {
       if (this.pageIndex === 1) {
-        this.pageIndex = this.pageIndex - 1;
+        this.pageIndex = this.offset - 1;
       } else {
-        this.pageIndex = (this.pageIndex - 1) * this.pageSize;
+        this.pageIndex = (this.offset - 1) * this.pageSize;
       }
     },
 
@@ -207,7 +187,15 @@ export default {
         .catch((e) => {});
     },
 
+    getPageIndex() {
+      if (this.$route.params.pageIndex === undefined) {
+        this.offset = 1;
+      } else {
+        this.offset = +this.$route.params.pageIndex;
+      }
+    },
     onLoadPage() {
+      this.getPageIndex();
       this.getTotalPage();
       this.getAllArticles();
     },

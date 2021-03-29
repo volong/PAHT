@@ -160,10 +160,10 @@ export default {
     registerSubmit() {
       DepAuthService.register(this.depObj)
         .then((response) => {
-          console.log(response.data);
+          this.$message.success("Tạo đơn vị thành công");
         })
         .catch((err) => {
-          console.log(err);
+          this.$message.warning("Lỗi");
         });
     },
   },

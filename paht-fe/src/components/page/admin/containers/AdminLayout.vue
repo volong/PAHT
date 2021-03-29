@@ -3,14 +3,7 @@
     <a-layout-sider v-model="collapsed" :trigger="null" collapsible>
       <div class="logo" />
 
-      <a-menu theme="dark" mode="inline" :default-selected-keys="['1']">
-        <!-- <a-menu-item>
-          <router-link to="/admin/dashboard" exact></router-link>
-          <a-icon type="dashboard" />
-
-          <span>Thống kê</span>
-        </a-menu-item> -->
-
+      <a-menu theme="dark" mode="vertical" :default-selected-keys="['1']">
         <a-sub-menu key="sub1">
           <span slot="title"><a-icon type="edit" /><span>Bài viết</span></span>
           <a-menu-item key="1">
@@ -27,6 +20,11 @@
             <router-link to="/admin/processed" exact></router-link>
             Đã xử lí
           </a-menu-item>
+
+          <!-- <a-menu-item key="4">
+            <router-link to="/admin/deleted" exact></router-link>
+            Bài không hợp lệ
+          </a-menu-item> -->
         </a-sub-menu>
 
         <a-menu-item v-for="i in menu" :key="i.key">
@@ -42,6 +40,7 @@
         </a-menu-item>
       </a-menu>
     </a-layout-sider>
+
     <a-layout>
       <a-layout-header style="background: #fff; padding: 0">
         <a-icon
@@ -50,12 +49,13 @@
           @click="() => (collapsed = !collapsed)"
         />
       </a-layout-header>
+
       <a-layout-content
         :style="{
           margin: '24px 16px',
           padding: '24px',
           background: '#fff',
-          minHeight: '650px',
+          minHeight: '700px',
         }"
       >
         <router-view />
@@ -81,6 +81,11 @@ export default {
           title: "Lĩnh vực",
           icon: "book",
         },
+        // {
+        //   path: "/admin/users",
+        //   title: "Người dùng",
+        //   icon: "team",
+        // },
       ],
     };
   },
@@ -97,7 +102,7 @@ export default {
     },
   },
 
-  mounted() {
+  created() {
     if (!this.currentUser) {
       this.$router.push("/admin/login");
     }
@@ -122,5 +127,8 @@ export default {
   height: 32px;
   background: rgba(255, 255, 255, 0.2);
   margin: 16px;
+}
+.admin-drop {
+  padding-left: 500px;
 }
 </style>

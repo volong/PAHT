@@ -52,6 +52,7 @@
                 hidden
               />
             </a-col>
+
             <a-col :span="12" :style="{ textAlign: 'right' }">
               <a-spin :spinning="spinSubmit" tip="Đang gửi...">
                 <a-button
@@ -72,11 +73,12 @@
       </div>
 
       <div class="clearfix">
-        <a-spin :spinning="spinning" tip="Đang tải ảnh...">
+        <a-spin :spinning="spinningImg" tip="Đang tải ảnh...">
           <a-upload
             list-type="picture-card"
             :default-file-list="fileList"
             @preview="handlePreview"
+            @change="handleChange"
           >
           </a-upload>
           <a-modal
@@ -103,14 +105,16 @@ var currentFile = new Object();
 var currenArticle = new Object();
 var imageInfos = [];
 var imageParams = [];
+var selectedFiles = [];
 var visibleForm;
+var spinningImg;
 var currentArticle_id;
 export default {
   components: { UserCreateArticleMessage },
   name: "UserCreateArticle",
   data() {
     return {
-      selectedFiles: undefined,
+      selectedFiles,
       message: "",
       currentArticle_id,
       currentArticleID: "",
@@ -119,7 +123,7 @@ export default {
       imageInfos,
       visibleForm,
       imageParams,
-      spinning: false,
+      spinningImg: false,
       spinSubmit: false,
       previewVisible: false,
       previewImage: "",
@@ -153,6 +157,17 @@ export default {
 
     // method lưu bài viết bằng cách gọi create() trong ArticleService
     savePost() {
+      var avatar;
+      var infoAvatar;
+      if (this.imageInfos.length > 0) {
+        infoAvatar = this.imageInfos[0].uid + "." + this.imageInfos[0].type;
+        avatar =
+          "https://res.cloudinary.com/paht/image/upload/w_1000,ar_16:9,c_fill,g_auto,e_sharpen/v1615271102/" +
+          infoAvatar;
+      } else {
+        avatar =
+          "https://res.cloudinary.com/paht/image/upload/v1615438754/mhidxiugfz4dkkyxijp9.jpg";
+      }
       this.spinSubmit = true;
       var date = new Date(Date.now());
 
@@ -176,6 +191,10 @@ export default {
       var user = {
         id: this.currentUser.id,
       };
+
+      var dep = {
+        id: 2,
+      };
       var article = {
         dateofpost: saveDate,
         content: this.articleObj.content,
@@ -184,6 +203,8 @@ export default {
         field: field,
         is_delete: 0,
         user: user,
+        dep: dep,
+        avatar: avatar,
       };
 
       ArticleService.create(article)
@@ -210,9 +231,7 @@ export default {
         imageInfos[i].article_id = currentArticle_id;
       }
       FileArticleService.create(imageInfos)
-        .then((response) => {
-          console.log(response.data);
-        })
+        .then((response) => {})
         .catch((error) => {});
     },
 
@@ -232,14 +251,12 @@ export default {
     selectFile(event) {
       this.selectedFiles = event.target.files;
       if (
-        this.selectedFiles.length > 5 ||
-        this.fileList.length + this.selectedFiles.length > 5
+        this.selectedFiles.length > 5 || // Check số ảnh vừa chọn
+        this.fileList.length + this.selectedFiles.length > 5 // Check ảnh vừa chọn và ảnh có  trong mảng
       ) {
         this.$message.warning("Bạn chỉ có thêm tối đa 5 ảnh");
       } else {
-        for (let i = 0; i < this.selectedFiles.length; i++) {
-          this.upload(this.selectedFiles[i]);
-        }
+        this.uploadFiles();
       }
     },
 
@@ -249,9 +266,24 @@ export default {
       this.previewVisible = true;
     },
 
+    async handleChange(currentFile) {
+      this.imageInfos.forEach((element) => {
+        if (element.status === "removed") {
+          this.imageInfos.splice(element, 1);
+          this.fileList.splice(element, 1);
+        }
+      });
+
+      // this.selectedFiles.forEach((element) => {
+      //   if (element.status === "removed") {
+      //     this.selectedFiles.splice(element, 1);
+      //     console.log(this.selectedFiles);
+      //   }
+      // });
+    },
+
     // Gửi 1 ảnh về back-end thông qua RESTful và nhận giá trị reponse
     upload(file) {
-      this.spinning = !this.spinning;
       UploadService.upload(file)
         .then((response) => {
           currentFile = {
@@ -264,14 +296,11 @@ export default {
 
           imageInfos.push(currentFile);
           this.fileList.push(currentFile);
-          this.spinning = !this.spinning;
-
           return null;
         })
 
         .catch((err) => {
           this.$message.warning("Lỗi tải file");
-          this.spinning = !this.spinning;
         });
     },
 
@@ -281,6 +310,7 @@ export default {
     },
   },
   mounted() {
+    this.spinning = false;
     this.checkFormCreate();
   },
 };

@@ -7,6 +7,10 @@
         <user-profile-info />
       </a-tab-pane>
 
+      <!-- <a-tab-pane key="2" tab="Lịch sử">
+        <user-profile-info />
+      </a-tab-pane> -->
+
       <!-- <a-tab-pane key="4" tab="Đăng xuất"> </a-tab-pane> -->
     </a-tabs>
     <div>

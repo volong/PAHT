@@ -37,6 +37,10 @@ public class User {
     @OneToMany(mappedBy = "user")
     private Set<Article> articles;
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "user")
+    private Set<Feedback> feedbacks;
+
     public User() {
     }
 
@@ -129,5 +133,13 @@ public class User {
 
     public void setArticles(Set<Article> articles) {
         this.articles = articles;
+    }
+
+    public Set<Feedback> getFeedbacks() {
+        return feedbacks;
+    }
+
+    public void setFeedbacks(Set<Feedback> feedbacks) {
+        this.feedbacks = feedbacks;
     }
 }

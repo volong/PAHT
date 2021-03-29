@@ -36,37 +36,7 @@ export default {
       listType: false,
     };
   },
-  methods: {
-    getListArticlesChecked(index) {
-      ArticleService.findAllChecked(index)
-        .then((response) => {
-          this.articles = response.data;
-          this.listPostItem = this.listPostItem.concat(this.articles);
-        })
-        .catch((error) => {
-          this.$message.warning("Lỗi hệ thống, vui lòng thử lại sau");
-        });
-    },
-
-    changeListType(result) {
-      this.listType = result;
-    },
-
-    pageDetail(article_id) {
-      this.$router.push("/article/" + article_id);
-    },
-
-    handleInfiniteOnLoad() {},
-
-    getImagesInfo() {
-      this.pageIndex = this.pageIndex + 9;
-      this.getListArticlesChecked(this.pageIndex);
-    },
-  },
-
-  mounted() {
-    this.getListArticlesChecked(this.pageIndex);
-  },
+  methods: {},
 };
 </script>
 <style scoped>

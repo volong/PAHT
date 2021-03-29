@@ -41,12 +41,14 @@ public class Article {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @ManyToOne
+    @JoinColumn(name = "dep_id")
+    private User dep;
+
     public Article() {
     }
 
-    public Article(Long article_id, String title, String content, String avatar,
-                   String dateofpost, String location, Long is_delete, Status status,
-                   Field field, Set<Feedback> feedbacks, User user) {
+    public Article(Long article_id, String title, String content, String avatar, String dateofpost, String location, Long is_delete, Status status, Field field, Set<Feedback> feedbacks, User user, User dep) {
         this.article_id = article_id;
         this.title = title;
         this.content = content;
@@ -58,6 +60,7 @@ public class Article {
         this.field = field;
         this.feedbacks = feedbacks;
         this.user = user;
+        this.dep = dep;
     }
 
     public Long getArticle_id() {
@@ -146,5 +149,13 @@ public class Article {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public User getDep() {
+        return dep;
+    }
+
+    public void setDep(User dep) {
+        this.dep = dep;
     }
 }

@@ -31,7 +31,13 @@
 
     <a-descriptions>
       <a-descriptions-item>
-        <p>{{ articleObj.content }}</p>
+        <span class="span-content-post">Nội dung phản ánh:</span>
+      </a-descriptions-item></a-descriptions
+    >
+
+    <a-descriptions>
+      <a-descriptions-item>
+        <p class="content-post-span">{{ articleObj.content }}</p>
       </a-descriptions-item></a-descriptions
     >
     <div>
@@ -47,9 +53,8 @@
 
     <div class="feedback">
       <div class="title-feedback">
-        <span class="span-title-feedback"
-          >Trả lời của Trung tâm Góp ý - Phản ánh
-        </span>
+        Trả lời của
+        <span class="span-title-feedback">{{ feedbackObj.respondent }} </span>
       </div>
       <div class="content-feedback">
         <span> {{ feedbackObj.content }}</span>
@@ -137,7 +142,10 @@ export default {
   font-weight: bold;
   color: #595959;
 }
-
+.content-post-span {
+  white-space: pre-wrap;
+  margin-left: 2rem;
+}
 .feedback {
   border: 1px solid #91d5ff;
   background-color: #e6f7ff;
@@ -155,6 +163,10 @@ export default {
   padding-top: 20px;
 }
 
+.date-feedback {
+  white-space: pre-wrap;
+}
+
 .title-feedback {
   text-align: center;
 }
@@ -165,7 +177,6 @@ export default {
 }
 
 label {
-  font-weight: bold;
   color: black;
 }
 

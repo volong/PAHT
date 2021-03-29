@@ -41,9 +41,9 @@
 
     <div class="pagination">
       <a-pagination
-        v-if="visblePagin"
+        v-if="visiblePagin"
         :total="totalPage"
-        :page-size.sync="pageSize"
+        :page-size.sync="this.pageSize"
         :default-current="pageSize"
         @change="onChangePage"
       />
@@ -66,9 +66,10 @@ var totalPage;
 var pageSize;
 var keyword;
 var offset;
+var dep_id;
 
 export default {
-  name: "AdminArticlesListProcessed",
+  name: "DepArticlesListProcessed",
   data() {
     return {
       data: [],
@@ -77,12 +78,13 @@ export default {
       pageSize: 9,
       status_id: 3,
       offset,
+      dep_id,
+      visiblePagin: true,
       currentStatus_id,
       tableVisble,
       pageIndex: 1,
       totalPage,
       keyword,
-      visblePagin: true,
       statuses,
 
       sort: 0,
@@ -118,35 +120,33 @@ export default {
       ],
     };
   },
+  computed: {
+    currentUser() {
+      return this.$store.state.depAuth.dep;
+    },
+  },
   methods: {
     onChangePage(result) {
       this.pageIndex = result;
       this.getAllArticles();
     },
 
+    detailPage(article_id) {
+      this.$router.push("/dep/article/" + article_id);
+    },
+
     onChangeSearch() {
-      if (this.keyword === "") {
-        this.getAllArticlesASC();
+      if (this.keyword == "") {
+        this.getAllArticles();
       } else {
         this.searchByKeyword();
       }
     },
 
-    confirmDelete(id) {
-      ArticleService.remove(id)
-        .then((response) => {
-          this.$message.warning("Xoá bài viết thành công");
-          this.getAllArticlesASC();
-        })
-        .catch((e) => {
-          this.$message.warning("Lỗi!");
-        });
-    },
-
     getAllArticlesASC() {
-      this.visblePagin = true;
-      ArticleService.findNewArticlesASC(
+      ArticleService.findByDep(
         this.status_id,
+        this.dep_id,
         this.pageSize,
         this.pageIndex
       )
@@ -159,26 +159,13 @@ export default {
     },
 
     getAllArticles() {
+      this.visiblePagin = true;
       this.getOFFSET();
       this.getAllArticlesASC();
     },
 
-    getListStatus() {
-      StatusService.findAll()
-        .then((response) => {
-          this.statuses = response.data;
-        })
-        .catch((e) => {
-          this.$message.warning("Lỗi khi lấy danh sách trạng thái");
-        });
-    },
-
-    detailPage(article_id) {
-      this.$router.push("/admin/article/" + article_id);
-    },
-
     getTotalPage() {
-      ArticleService.getSumArticles(this.status_id)
+      ArticleService.getSumArticlesForDep(this.dep_id, this.status_id)
         .then((response) => {
           this.totalPage = response.data;
         })
@@ -194,15 +181,16 @@ export default {
     },
 
     // searchByKeyword() {
-    //   this.visblePagin = false;
-    //   ArticleService.search(1, this.keyword)
+    //   this.visiblePagin = false;
+    //   ArticleService.search(2, this.keyword)
     //     .then((response) => {
     //       this.articles = response.data;
+    //       console.log("obj", response.data);
     //     })
     //     .catch((e) => {});
     // },
-
     onLoadPage() {
+      this.dep_id = this.currentUser.id;
       this.getTotalPage();
       this.getAllArticles();
     },
@@ -226,7 +214,6 @@ export default {
   padding-top: 10px;
   text-align: right;
 }
-
 .span {
   color: black;
   padding-bottom: 2px;

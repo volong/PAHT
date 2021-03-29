@@ -11,22 +11,26 @@ public interface ArticleService {
     List<Article> findAll(@Param("pageSize") Long pageSize, @Param("pageIndex") Long pageIndex);
 
     List<Article> findArticlesIsChecked(@Param("pageIndex") Long pageIndex);
-
+    List<Article> findArticlesIsDeleted(@Param("pageIndex") Long pageIndex);
     List<Article> findByStatus_idSortASC(@Param("status_id") Long status_id, @Param("pageSize") Long pageSize, @Param("pageIndex") Long pageIndex);
-
+    List<Article> findByDep_id(@Param("status_id") Long status_id, @Param("dep_id") Long dep_id, @Param("pageSize") Long pageSize, @Param("pageIndex") Long pageIndex);
     List<Article> searchByKeyword(@Param("status_id") Long status_id, @Param("keyword") String keyword);
 
     Optional<Article> findById(@Param("article_id") Long article_id);
 
     Long sum(@Param("status_id") Long status_id);
-//    void create(@Param("content") String content, @Param("location") String location, @Param("dateofpost") String dateofpost);
+    Long sumForDep(@Param("dep_id") Long dep_id, @Param("status_id") Long status_id);
 
     void save(@RequestBody Article article);
 
     void update(@Param("title") String title,
-                @Param("avatar") String avatar, @Param("status_id") Long status_id,
-                @Param("field_id") Long field_id, @Param("article_id") Long article_id);
+               @Param("status_id") Long status_id,
+                @Param("field_id") Long field_id, @Param("dep_id") Long dep_id, @Param("article_id") Long article_id);
 
+
+    void delete(@Param("article_id") Long article_id);
+
+    void restore(@Param("article_id") Long article_id);
 }
 
 

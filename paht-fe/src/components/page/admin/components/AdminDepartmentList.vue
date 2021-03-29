@@ -95,7 +95,7 @@ export default {
       trash,
       columns: [
         {
-          title: "Đơn vị",
+          title: "Tên Đơn vị",
           dataIndex: "fullname",
           width: "20%",
         },

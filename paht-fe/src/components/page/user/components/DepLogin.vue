@@ -1,6 +1,6 @@
 <template>
   <a-card
-    title="Quản trị viên"
+    title="Đơn vị xử lí"
     :bordered="false"
     :style="{ minHeight: '550px' }"
   >
