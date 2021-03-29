@@ -15,7 +15,21 @@ You can try out a live demo my project at
 
 * https://paht-live.web.app/admin for Admin.
 
+List accounts: 
 
+- General password: 123456
+
+- User's Accounts:
+ * username: volong
+ * username: user1
+
+- Department's Accounts:
+ * username: dvc - fullname: Trung tâm thông tin dịch vụ công
+ * username: sct - fullname: Sở Công thương
+ * username: sgtvt - fullname: Sở Giao thông vận tải
+
+- Admin's Account:
+ * username: admin
 
 
 [[used-technologies]]
