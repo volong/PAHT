@@ -9,7 +9,12 @@ A personal project with Spring boot and Vuejs
 Currently the project is deployed.
 You can try out a live demo my project at
 
-* https://paht-live.web.app/
+* https://paht-live.web.app/ for User.
+
+* https://paht-live.web.app/dep for Department.
+
+* https://paht-live.web.app/admin for Admin.
+
 
 
 
